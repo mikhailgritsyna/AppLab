@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TikTok OAuth Callback</title>
+</head>
+<body>
+  <h1>TikTok OAuth Callback</h1>
+  <p>This page reads the <code>code</code> parameter from the URL and shows it below so you can copy it into Google Apps Script to exchange for an access token.</p>
+  <pre id="out">Waiting for parameters...</pre>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const code = params.get('code');
+    const state = params.get('state');
+    const err = params.get('error');
+    const out = document.getElementById('out');
+    if (err) {
+      out.textContent = 'Error: ' + err;
+    } else if (code) {
+      out.textContent = 'Authorization code:\n' + code + (state ? '\n\nState:\n' + state : '');
+    } else {
+      out.textContent = 'No code parameter found. Make sure this URL is set as the Redirect URL in your TikTok Developer app.';
+    }
+  </script>
+</body>
+</html>
